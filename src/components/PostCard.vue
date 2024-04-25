@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="post.user">
+  <v-card max-width="600px" v-if="post">
     <v-img :src="postImageUrl" height="300" class="mb-3"></v-img>
     <v-card-title>{{ post.title }}</v-card-title>
     <v-card-text class="user-info">
@@ -28,8 +28,9 @@ export default {
       required: true,
     },
   },
-  async mounted () {
+  async created () {
      this.userInfo = await fetchUser(this.default)
+     console.log("post",this.post);
   },
    data() {
      return {

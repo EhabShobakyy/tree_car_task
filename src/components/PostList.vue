@@ -7,7 +7,7 @@
         </v-col>
       </v-row>
       <v-row class="btn-section">
-        <v-btn color="red" @click="previousPost" :disabled="currentIndex === 0">Previous</v-btn>
+        <v-btn @click="previousPost" :disabled="currentIndex === 0">Previous</v-btn>
         <v-btn @click="nextPost" :disabled="currentIndex === posts.length - 1">Next</v-btn>
       </v-row>
     </v-container>
@@ -16,7 +16,7 @@
 
 <script>
 import PostCard from './PostCard.vue';
-import { fetchPosts, fetchUser } from '../services/api';
+import { fetchPosts} from '../services/api';
 
 export default {
   name: 'PostList',
@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       posts: [],
-      currentIndex: 1,
+      currentIndex: 0,
       loaded: false, // Flag to track whether data has been loaded
     };
   },
@@ -42,16 +42,9 @@ export default {
     async loadPostsAndUserDetails() {
       try {
         this.posts = await fetchPosts();
-        await this.loadUserDetails()
         this.loaded = true; // Set flag to true after loading data
       } catch (error) {
         console.error('Error loading data:', error);
-      }
-    },
-    async loadUserDetails() {
-      for (let i = 0; i < this.posts.length; i++) {
-        const user = await fetchUser(this.posts[i].userId);
-        this.posts[i].user = user;
       }
     },
     nextPost() {
@@ -71,10 +64,16 @@ export default {
 <style scoped lang="scss">
 .main {
   height: 100vh;
+  max-width: 500px;
   display: flex;
   align-items: center !important;
 }
 .btn-section {
   justify-content: space-between !important;
+  button {
+    background-color: #14bf14e0 !important;
+    color: white;
+    margin: 12px 16px;
+  }
 }
 </style>

@@ -15,3 +15,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#app {
+  display: flex;
+  justify-content: center;
+}
+</style>
